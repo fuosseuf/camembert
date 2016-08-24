@@ -38,18 +38,31 @@ class Database {
         return $this->db;
     }
 
-    public function query($statement, $class) {
-        return $this->getDb()->query($statement)->fetchAll(PDO::FETCH_CLASS, $class);
+    public function query($statement, $class_name = null, $one = FALSE) {
+        $req = $this->getDb()->query($statement);
+        if (is_null($class_name))
+            $req->setFetchMode(PDO::FETCH_OBJ);
+        else
+            $req->setFetchMode(PDO::FETCH_CLASS, $class_name);
+
+        if ($one)
+            return $req->fetch();
+        else
+            return $req->fetchAll();
     }
 
     public function prepare($statement, $values, $class, $only_one = true) {
         $req = $this->getDb()->prepare($statement);
         $req->execute($values);
-        $req->setFetchMode(PDO::FETCH_CLASS, $class); 
+        $req->setFetchMode(PDO::FETCH_CLASS, $class);
         if ($only_one)
             return $req->fetch();
         else
             return $req->fetchAll();
+    }
+    
+    public function execute($statement) {
+        return $this->getDb()->exec($statement);
     }
 
 }

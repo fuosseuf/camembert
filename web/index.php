@@ -1,6 +1,7 @@
 <?php
 
 use App\Autoloader;
+use App\core\AppCore;
 
 require '../app/core/Autoloader.php';
 
@@ -10,6 +11,10 @@ error_reporting(E_ALL);
 
 Autoloader::register();
 
+$c = AppCore::getInstance()->getEntity("country");
+
+var_dump($c->delete(3));
+die;
 $page = 'home';
 
 if (isset($_GET['page']))

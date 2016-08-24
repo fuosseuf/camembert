@@ -1,6 +1,6 @@
 <h1>Home Page</h1>
 <?php
-$reponse = App\core\AppCore::getDb()->query("SELECT * FROM country", "App\src\site\models\Country");
+$reponse = App\core\AppCore::getInstance()->getDb()->query("SELECT * FROM country", "App\src\site\models\Country");
 foreach ($reponse as $value) {
     ?>
     <p>

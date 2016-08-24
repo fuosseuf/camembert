@@ -1,18 +1,18 @@
 <?php
 
 namespace App\src\site\models;
+
+use App\core\Entity;
 /**
  * Description of country
  *
  * @author rodrigue
  */
-class country {
+class countryEntity extends Entity{
 
     private $name;
     private $iso_code;
 
-    function __construct() {
-    }
     function getName() {
         return $this->name;
     }
