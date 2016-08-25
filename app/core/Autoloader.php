@@ -9,7 +9,7 @@ namespace App;
  */
 class Autoloader {
 
-    public static function autoload($class) {
+    public static function autoload($class) { 
         if (strpos($class, __NAMESPACE__ . "\\") === 0) {
             $class = str_replace(__NAMESPACE__ . "\\", "", $class);
             
