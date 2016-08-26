@@ -13,8 +13,9 @@ use App\core\AppCore;
 class ApiController extends RestController
 {
 
-    //put your code here
-
+    /**
+     * gestion des resseources users -- list
+     */
     public function users()
     {
         $users = $this->getEntity('users');
@@ -35,6 +36,9 @@ class ApiController extends RestController
         }
     }
 
+    /**
+     * gestion des resseources music -- list
+     */
     public function music()
     {
         $music = $this->getEntity('music');
@@ -55,12 +59,18 @@ class ApiController extends RestController
         }
     }
 
+        /**
+     * gestion des resseources bookmarks
+     */
+
     public function bookmarks()
     {
         $users = $this->getEntity('users');
         $music = $this->getEntity('music');
 
         if ($this->request->get('id_user')) {
+            
+            //add
             if ($this->request->get('add') && $this->request->post('id_music')) {
                 if ($users->find($this->request->get('id_user'))) {
                     if ($music->find($this->request->post('id_music'))) {
@@ -77,11 +87,13 @@ class ApiController extends RestController
                     $this->jsonRender(200, "User not found", null);
                 }
             }
-
+            
+            //delete
             if ($this->request->get('delete') && $this->request->get('id_music')) {
                 $users->deleteMusic($this->request->get('id_user'), $this->request->get('id_music'));
                 $this->jsonRender(200, "Bookmarks delete", $data);
             } else {
+                //list
                 if ($data = $users->getMusics($this->request->get('id_user'))) {
                     $this->jsonRender(200, "Bookmarks found", $data);
                 } else {

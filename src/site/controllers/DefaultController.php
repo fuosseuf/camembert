@@ -13,6 +13,6 @@ class DefaultController extends Controller{
     
     public function index() {
         $countries = $this->getEntity('country');
-        $this->render('Default:index', array('countries' => $countries->findAll()));
+        $this->render('Default:index', array('users' => $users->findAll()));
     }
 }
