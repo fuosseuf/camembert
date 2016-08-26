@@ -28,7 +28,12 @@ switch ($rss) {
         $controller->music();
         break;
     case "bookmarks":
-        $controller->bookmarks();
+        if (array_key_exists('delete', $_GET))
+            $controller->deletebookmarks();
+        else if (array_key_exists('add', $_GET))
+            $controller->addbookmarks();
+        else
+            $controller->listbookmarks();
         break;
     default:
         $controller->notFound();
