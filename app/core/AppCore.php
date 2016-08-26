@@ -3,6 +3,7 @@ namespace App\core;
 
 use App\core\Database;
 use App\config\Config;
+use App\core\Request;
 
 /**
  * Description of AppCore
@@ -13,6 +14,7 @@ class AppCore {
 
     private $db;
     private static $_instance;
+    private static $_request;
 
     private function __construct() {
         $config = Config::getInstance();
@@ -32,6 +34,12 @@ class AppCore {
 
     public function getDb() {
         return $this->db;
+    }
+    
+        public static function getRequest() {
+        if (self::$_request === null)
+            self::$_request = new Request();
+        return self::$_request;
     }
     
 //    public static function load(){

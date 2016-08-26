@@ -13,6 +13,7 @@ error_reporting(E_ALL);
 
 Autoloader::register();
 
+
 $rss = '';
 
 if (isset($_GET['rss']))
@@ -27,7 +28,7 @@ switch ($rss) {
         $controller->music();
         break;
     case "bookmarks":
-        $controller->music();
+        $controller->bookmarks();
         break;
     default:
         $controller->notFound();

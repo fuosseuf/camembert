@@ -3,6 +3,7 @@
 namespace App\core;
 
 use \PDO;
+use App\core\AppCore;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,15 +16,17 @@ use \PDO;
  *
  * @author rodrigue
  */
-class Entity {
+class Entity
+{
 
     //put your code here
 
-    protected $table;
+    public $table;
     protected $db;
     protected $class_name;
 
-    public function __construct(\App\core\Database $db) {
+    public function __construct(\App\core\Database $db)
+    {
         $this->db = $db;
         $this->class_name = get_class($this);
         if (is_null($this->table)) {
@@ -33,12 +36,19 @@ class Entity {
         }
     }
 
-    public function findAll() {
+    public static function getEntity($entity)
+    {
+        return AppCore::getInstance()->getEntity($entity);
+    }
+
+    public function findAll()
+    {
         $statement = "SELECT * FROM $this->table";
         return $this->db->query($statement);
     }
 
-    public function findBy(array $attrs, $one = FALSE) {
+    public function findBy(array $attrs, $one = FALSE)
+    {
         $statement = "SELECT * FROM $this->table WHERE";
         $where = "";
         foreach ($attrs as $key => $value) {
@@ -49,11 +59,13 @@ class Entity {
         return $this->db->query($statement, $one);
     }
 
-    public function find($id) {
+    public function find($id)
+    {
         return $this->findBy(array('id' => $id), true);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $statement = "DELETE FROM $this->table WHERE id=$id";
         if (1 === $this->db->execute($statement))
             return true;
@@ -61,18 +73,26 @@ class Entity {
         return FALSE;
     }
 
-    public function add($values) {
-        $statement = "INSERT INTO $this->table VALUES(null," ;
+    public function add($values, $hasId = true)
+    {
+        $statement = "INSERT INTO $this->table VALUES(";
+
+        if ($hasId)
+            $statement .= "null,";
         $set = "";
         foreach ($values as $key => $value) {
-            $set .= " '$value',";
+            if (is_float($value) || is_int($value))
+                $set .= " $value,";
+            else
+                $set .= " '$value',";
         }
         $set = substr($set, 0, -1);
         $statement .= "$set)";
         return $this->db->execute($statement);
     }
 
-    public function update($id, $values) {
+    public function update($id, $values)
+    {
         $statement = "UPDATE $this->table";
         $set = " SET";
         foreach ($values as $key => $value) {
@@ -83,10 +103,11 @@ class Entity {
         echo $statement;
         return $this->db->execute($statement . $set);
     }
-    
-    public function __get($name) {
-        $method = 'get'.  ucfirst($name);
-        $this->$name =  $this->$method();
+
+    public function __get($name)
+    {
+        $method = 'get' . ucfirst($name);
+        $this->$name = $this->$method();
         return $this->$name;
     }
 

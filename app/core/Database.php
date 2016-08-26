@@ -61,7 +61,7 @@ class Database {
             return $req->fetchAll();
     }
     
-    public function execute($statement) {
+    public function execute($statement) { echo $statement;
         return $this->getDb()->exec($statement);
     }
 

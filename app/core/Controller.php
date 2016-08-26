@@ -7,11 +7,14 @@ class Controller {
     //put your code here
     protected $viewPath;
     protected $template;
-    
+    protected $request;
+
+
     public function __construct() {
         $tab = explode("\\", get_called_class());
             $this->viewPath = ROOT.'/'.$tab[1].'/'.$tab[2].'/views/'; 
-            $this->template = ROOT.'/app/layout/base.html.php';
+            $this->template = ROOT.'/app/layout/base.html.php'; 
+            $this->request = AppCore::getRequest(); 
     }
     
     protected function getEntity($entity){
@@ -27,4 +30,5 @@ class Controller {
         require ($this->template);
         
     }
+    
 }
