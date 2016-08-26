@@ -1,16 +1,8 @@
 <?php
 namespace App\core;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- * Description of Controller
- *
- * @author rodrigue
- */
+use App\core\AppCore;
+
 class Controller {
     //put your code here
     protected $viewPath;
@@ -21,6 +13,11 @@ class Controller {
             $this->viewPath = ROOT.'/'.$tab[1].'/'.$tab[2].'/views/'; 
             $this->template = ROOT.'/app/layout/base.html.php';
     }
+    
+    protected function getEntity($entity){
+        return AppCore::getInstance()->getEntity($entity);
+    }
+
 
     protected function render($view, $vars = array()){ 
         ob_start();
