@@ -12,7 +12,7 @@ class DefaultController extends Controller{
     //put your code here
     
     public function index() {
-        $countries = AppCore::getInstance()->getEntity('country');
+        $countries = $this->getEntity('country');
         $this->render('Default:index', array('countries' => $countries->findAll()));
     }
 }

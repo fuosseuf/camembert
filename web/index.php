@@ -13,14 +13,24 @@ error_reporting(E_ALL);
 
 Autoloader::register();
 
-$page = 'home';
+$rss = '';
 
-if (isset($_GET['page']))
-    $page = $_GET['page'];
+if (isset($_GET['rss']))
+    $rss = $_GET['rss'];
 
-if($page === "home"){
-    $controller = new \App\src\site\controllers\DefaultController();
-    $controller->index();
+$controller = new \App\src\api\controllers\ApiController();
+switch ($rss) {
+    case "users":
+        $controller->users();
+        break;
+    case "music":
+        $controller->music();
+        break;
+    case "bookmarks":
+        $controller->music();
+        break;
+    default:
+        $controller->notFound();
+        break;
 }
-
 ?>

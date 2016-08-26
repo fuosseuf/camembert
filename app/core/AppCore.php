@@ -26,7 +26,7 @@ class AppCore {
     }
 
     public function getEntity($class) {
-        $class_name = '\\App\\src\\site\\models\\'.$class . 'Entity';
+        $class_name = '\\App\\src\\api\\models\\'.$class . 'Entity';
         return new $class_name($this->getDb());
     }
 

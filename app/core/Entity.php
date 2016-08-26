@@ -38,7 +38,7 @@ class Entity {
         return $this->db->query($statement);
     }
 
-    public function findBy(array $attrs) {
+    public function findBy(array $attrs, $one = FALSE) {
         $statement = "SELECT * FROM $this->table WHERE";
         $where = "";
         foreach ($attrs as $key => $value) {
@@ -46,11 +46,11 @@ class Entity {
         }
         $where = substr($where, 0, -4);
         $statement .= $where;
-        return $this->db->query($statement);
+        return $this->db->query($statement, $one);
     }
 
     public function find($id) {
-        return $this->findBy(array('id' => $id));
+        return $this->findBy(array('id' => $id), true);
     }
 
     public function delete($id) {

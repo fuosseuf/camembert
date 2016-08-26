@@ -38,7 +38,7 @@ class Database {
         return $this->db;
     }
 
-    public function query($statement, $class_name = null, $one = FALSE) {
+    public function query($statement,  $one = FALSE, $class_name = null) {
         $req = $this->getDb()->query($statement);
         if (is_null($class_name))
             $req->setFetchMode(PDO::FETCH_OBJ);
